@@ -1,5 +1,5 @@
-# Automatic Download/Modify Images Python Script
-This script is made to automatically download from 1 to 10 images and modify them as you wish.
+# Análisis de Redes: Representación y Cálculo de Caminos Más Cortos Usando Grafos
+This script represents and calculates the shortest path between two nodes using Dijkstra
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Use](#use)
