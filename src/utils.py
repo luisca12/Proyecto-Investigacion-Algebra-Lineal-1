@@ -34,7 +34,7 @@ def exportGraphtoCSV(graph, srcNode, dstNode, filename='Todos los posibles camin
     with open(filename, mode='a', newline='') as csvFile:
         writer = csv.writer(csvFile)
         if csvFile.tell() == 0:
-            writer.writerow(['Path', 'Weight', 'Notes'])
+            writer.writerow(['Camino', 'Peso', 'Notas'])
 
         for path in nx.all_simple_paths(graph, source=srcNode, target=dstNode):
             lengthOut = sum(graph[u][v]['weight'] for u, v in zip(path[:-1], path[1:]))
@@ -45,9 +45,9 @@ def exportGraphtoCSV(graph, srcNode, dstNode, filename='Todos los posibles camin
 
         for path, lengthOut in paths.items():
             if lengthOut == bestPath:
-                writer.writerow([' -> '.join(path), lengthOut, 'Best Path'])
+                writer.writerow([' -> '.join(path), lengthOut, 'Mejor camino'])
             elif lengthOut == worstPath:
-                writer.writerow([' -> '.join(path), lengthOut, 'Worst Path'])
+                writer.writerow([' -> '.join(path), lengthOut, 'Peor camino'])
             else:
                 writer.writerow([' -> '.join(path), lengthOut])
 
