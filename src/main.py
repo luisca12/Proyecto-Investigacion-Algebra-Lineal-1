@@ -11,10 +11,10 @@ def main():
         from src.strings import greetingString, inputErrorString
         greetingString()
         nodeAmount = input(f"¿Cuántos nodos quiere agregar?: ")
-        if checkIsDigit(nodeAmount) and int(nodeAmount) > 1:
+        if checkIsDigit(nodeAmount) and int(nodeAmount) > 2:
             print('-'*50)
             graph(int(nodeAmount))
-            
+            break
         else:
             sysLog.error(f"Valor incorrecto: {nodeAmount}")
             inputErrorString()
