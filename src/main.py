@@ -6,7 +6,7 @@ def main():
     while True:
         mkdir()
         from src.graphDef import graph
-        from src.functions import checkIsDigit
+        from src.utils import checkIsDigit
         from src.log import sysLog
         from src.strings import greetingString, inputErrorString
         greetingString()

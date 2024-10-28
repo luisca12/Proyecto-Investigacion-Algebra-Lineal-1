@@ -1,13 +1,10 @@
-from src.functions import checkIsDigit
+from src.utils import exportGraphtoCSV
 from src.log import sysLog
 
 import networkx as nx
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider
-import time
 import traceback
 import random
-import os
 
 def graph(nodeAmount):
     """
@@ -20,27 +17,35 @@ def graph(nodeAmount):
         None
     """
     try:
+        # Agregar nodos y aristas con pesos
+        # G.add_edge('Nodo1', 'Nodo2', weight=4)
+        # G.add_edge('Nodo2', 'Nodo3', weight=6)
+        # G.add_edge('Nodo1', 'Nodo3', weight=10)
+        # G.add_edge('Nodo3', 'Nodo4', weight=3)
+        # G.add_edge('Nodo2', 'Nodo4', weight=7)
+
         paths = {}
 
         nodeAmountInt = int(nodeAmount)
+
         graph = nx.Graph()
 
         for i in range(1, nodeAmountInt):
             print(i)
             graph.add_edge(f'Nodo {i}', f'Nodo {i+1}', weight=random.randint(1, 20))
+            print(f"Added Node {i} and Node Node {i + 1}")
 
-        numLinks = random.randint(1, nodeAmountInt * 2)  # Número de aristas entre nodos
-        linksAdded = 0
-        while linksAdded < numLinks:
-            nodeX = random.randint(1, nodeAmountInt)
-            nodeY = random.randint(1, nodeAmountInt)
+        for i in range(1, nodeAmountInt):
+            numLinksForNode = random.randint(1, nodeAmountInt)
+            linksAdded = 0
+            while linksAdded < numLinksForNode:
+                nodeY = random.randint(1, nodeAmountInt)
 
-            if nodeX != nodeY:
-                weight = random.randint(1, 20)
-                graph.add_edge(f'Nodo {nodeX}', f'Nodo {nodeY}', weight=weight)
-                
-                linksAdded += 1
-                print(f"Links added: {linksAdded}")
+                if nodeY != i:
+                    weight = random.randint(1, 20)
+                    graph.add_edge(f'Nodo {i}', f'Nodo {nodeY}', weight=weight)
+                    linksAdded += 1
+                    print(f"Link added: Nodo {i} to Nodo {nodeY} with weight {weight}")
 
         print("Aristas del grafo con pesos:")
         for u, v, weight in graph.edges(data=True):
@@ -96,12 +101,12 @@ def graph(nodeAmount):
                                 f'{bar.get_width()}', 
                                 va='center', ha='left', fontsize=7, fontweight='bold', color='black')
         plt.tight_layout()
+        exportGraphtoCSV(graph, srcNode, dstNode)
         plt.show(block=False)
         
         bestPath = nx.dijkstra_path(graph, source=srcNode, target=dstNode, weight='weight')
         print(f"\nEl camino más corto de {srcNode} a {dstNode} es: {bestPath}")
 
-       
         bestLength = nx.dijkstra_path_length(graph, source=srcNode, target=dstNode, weight='weight')
         print(f"La longitud total del camino más corto es: {bestLength}")
 
@@ -119,6 +124,8 @@ def graph(nodeAmount):
         
         bestPathFigure.set_title("Visualización del Grafo y Camino Más Corto", fontsize=16, fontweight='bold')
         plt.show()
+
+        
 
     except nx.NetworkXNoPath:
         print(f"No hay ruta disponible entre {srcNode} y {dstNode}")
